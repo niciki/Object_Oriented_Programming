@@ -1,0 +1,13 @@
+{
+  "variant": 19,
+  "figures": [
+    "Rectangle",
+    "Trapezoid",
+    "Rhombus"
+  ],
+  "containers": [
+  ],
+  "finished_labs": {
+    "lab1": "lab1"
+  }
+}
