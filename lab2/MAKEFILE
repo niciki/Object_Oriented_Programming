@@ -1,0 +1,2 @@
+all:
+	g++ figure.h main.cpp point.cpp rectangle.cpp TNaryTree_item.cpp TNaryTree.cpp -Wall -Wextra
