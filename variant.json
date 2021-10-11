@@ -6,8 +6,10 @@
     "Rhombus"
   ],
   "containers": [
+    "TNaryTree"
   ],
   "finished_labs": {
-    "lab1": "lab1"
+    "lab1": "lab1",
+    "lab2": "lab2"
   }
 }
