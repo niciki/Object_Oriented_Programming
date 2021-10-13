@@ -33,11 +33,10 @@ class TNaryTree {
         // "S0: [S1: [S3, S4: [S5, S6]], S2]", где Si - площадь фигуры
         friend std::ostream& operator<<(std::ostream& os, const TNaryTree& tree);
         virtual ~TNaryTree();
-        Item* root;
     private:
         int curr_number;
         int max_number;
-        //Item* root;
+        Item* root;
 };
 
 #endif
