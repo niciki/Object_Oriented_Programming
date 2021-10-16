@@ -18,6 +18,22 @@ Item::Item(Item* a){
     data = a->data;
 }
 
+Item* Item::Get_bro(){
+    return bro;
+}
+
+Item* Item::Get_son(){
+    return son;
+}
+
+void Item::Set_bro(Item* a){
+    bro = a;
+}
+
+void Item::Set_son(Item* a){
+    son = a;
+}
+
 void Item::Print(std::ostream &os){
     os << data.Area();
 }

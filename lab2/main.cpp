@@ -17,12 +17,12 @@ int main(){
     std::cout << t.size() << "\n";
     TNaryTree q(t);
     std::cout << q.size() << " " << q.Area("") << "\n";
-    std::cout << t;
-    //std::cout << q.root; //<< " " << q.root->bro << " " << q.root->bro->bro << " " << q.root->bro->son ;
-    //std::cout << t.root << " " << t.root->bro << " " << t.root->bro->bro << " " << t.root->bro->son << "\n";
-    //std::cout << t.root->bro->son << "\n";
-    //delete (t.root);
-    //t.root->bro->Print(std::cout);
-    //t.Clear("b");
-    // std::cout << t.Area("") << "\n";
+    std::cout << t << '\n' << q;
+    // std::cout << q.root; //<< " " << q.root->bro << " " << q.root->bro->bro << " " << q.root->bro->son ;
+    // std::cout << t.root << " " << t.root->bro << " " << t.root->bro->bro << " " << t.root->bro->son << "\n";
+    // std::cout << t.root->bro->son << "\n";
+    // delete (t.root);
+    // t.root->bro->Print(std::cout);
+    t.Clear("");
+    std::cout << t.Area("") << "\n";
 }

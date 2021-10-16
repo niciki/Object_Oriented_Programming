@@ -17,7 +17,7 @@ void TNaryTree::Update(Rectangle &&polygon, std::string &&tree_path){
         throw std::invalid_argument("Error, there is not a root value\n");
         return;
     } else if(tree_path == "" && curr_number == 0){
-        Item* q = new Item(polygon);
+        Item* q = (new Item(polygon));
         root = q; 
         curr_number++;
     } else if(curr_number + 1 > max_number){
@@ -27,29 +27,31 @@ void TNaryTree::Update(Rectangle &&polygon, std::string &&tree_path){
         Item* tmp = root;
         for(int i = 0; i < tree_path.length() - 1; i++){
             if(tree_path[i] == 'b'){
-                if(tmp->bro == nullptr){
+                Item* q = tmp->Get_bro();
+                if(q == nullptr){
                     throw std::invalid_argument("Path does not exist\n");
                     return;
                 }
-                tmp = tmp->bro;
+                tmp = q;
             } else if(tree_path[i] == 'c'){
-                if(tmp->son == nullptr){
+                Item* q = tmp->Get_son();
+                if(q == nullptr){
                     throw std::invalid_argument("Path does not exist\n");
                     return;
                 }
-                tmp = tmp->son;
+                tmp = q;
             } else {
                 throw std::invalid_argument("Error in path\n");
                 return;
             }
         }
-        Item* item = new Item(polygon);
+        Item* item(new Item(polygon));
         if(tree_path.back() == 'b'){
-            tmp->bro = item;
-            this->curr_number++;
+            tmp->Set_bro(item);
+            curr_number++;
         } else if(tree_path.back() == 'c'){
-            tmp->son = item;
-            this->curr_number++;
+            tmp->Set_son(item);
+            curr_number++;
         } else {
             throw std::invalid_argument("Error in path\n");
             return;
@@ -62,9 +64,9 @@ Item* copy(Item* root){
         return nullptr;
     }
     Item *root_copy = new Item(root);
-    root_copy->bro = copy(root->bro);
-    root_copy->son = copy(root->son);
-    return root_copy; 
+    root_copy->Set_bro(copy(root->Get_bro()));
+    root_copy->Set_son(copy(root->Get_son()));
+    return root_copy;
 }
 
 TNaryTree::TNaryTree(const TNaryTree& other){
@@ -82,7 +84,7 @@ int clear(Item* node) {
     if (!node) {
         return 0;
     }
-    int temp_res = clear(node->bro) + clear(node->son) + 1;
+    int temp_res = clear(node->Get_bro()) + clear(node->Get_son()) + 1;
     delete node;
     return temp_res;
 }
@@ -98,28 +100,30 @@ void TNaryTree::Clear(std::string &&tree_path){
     }
     for(int i = 0; i < tree_path.length(); i++){
         if(tree_path[i] == 'b'){
-            if(tmp->bro == nullptr){
+            Item* q = tmp->Get_bro();
+            if(q == nullptr){
                 throw std::invalid_argument("Path does not exist\n");
                 return;
             }
             prev_tmp = tmp;
-            tmp = tmp->bro;
+            tmp = q;
         } else if(tree_path[i] == 'c'){
-            if(tmp->son == nullptr){
+            Item* q = tmp->Get_son();
+            if(q == nullptr){
                 throw std::invalid_argument("Path does not exist\n");
                 return;
             }
             prev_tmp = tmp;
-            tmp = tmp->son;
+            tmp = q;
         } else {
             throw std::invalid_argument("Error in path\n");
             return;
         }
     }
-    if (tmp == prev_tmp->son) {
-        prev_tmp->son = nullptr;
+    if(tmp == prev_tmp->Get_son()) {
+        prev_tmp->Set_son(nullptr);
     } else {
-        prev_tmp->bro = nullptr;
+        prev_tmp->Set_bro(nullptr);
     }
     curr_number -= clear(tmp);
 }
@@ -128,24 +132,26 @@ double area(Item* node){
     if(!node){
         return 0;
     }
-    return node->Area() + area(node->bro) + area(node->son);
+    return node->Area() + area(node->Get_bro()) + area(node->Get_son());
 }
 
 double TNaryTree::Area(std::string &&tree_path){
     Item* tmp = root;
     for(int i = 0; i < tree_path.length(); i++){
         if(tree_path[i] == 'b'){
-            if(tmp->bro == nullptr){
+            Item* q = tmp->Get_bro();
+            if(q == nullptr){
                 throw std::invalid_argument("Path does not exist\n");
                 return -1;
             }
-            tmp = tmp->bro;
+            tmp = q;
         } else if(tree_path[i] == 'c'){
-            if(tmp->son == nullptr){
+            Item* q = tmp->Get_son();
+            if(q == nullptr){
                 throw std::invalid_argument("Path does not exist\n");
                 return -1;
             }
-            tmp = tmp->son;
+            tmp = q;
         } else {
             throw std::invalid_argument("Error in path\n");
             return -1;
@@ -161,24 +167,24 @@ void print(std::ostream& os, Item* node){
     if(!node){
         return;
     }
-    if(node->son){
+    if(node->Get_son()){
         //os <<  <<node->pentagon.GetArea() <<  : ]" << 
         os << node->Area() << ": [";
-        print(os, node->son);
-        if(node->bro){
-            if(node->bro){
+        print(os, node->Get_son());
+        if(node->Get_bro()){
+            if(node->Get_bro()){
                 os << ", ";
-                print(os, node->bro);
+                print(os, node->Get_bro());
             }
         }
         os << "]";
-    } else if (node->bro) {
+    } else if (node->Get_bro()) {
        os << node->Area() << ": [";
-        print(os, node->bro);
-        if(node->son){
-            if(node->son){
+        print(os, node->Get_bro());
+        if(node->Get_son()){
+            if(node->Get_son()){
                 os << ", ";
-                print(os, node->son);
+                print(os, node->Get_son());
             }
         }
         os << "]";
@@ -194,5 +200,5 @@ std::ostream& operator<<(std::ostream& os, const TNaryTree& tree){
 }
 
 TNaryTree::~TNaryTree(){
-    this->Clear();
+    Clear();
 };
