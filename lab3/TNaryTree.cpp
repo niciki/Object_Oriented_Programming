@@ -1,4 +1,5 @@
 #include "TNaryTree.h"
+#include "TNaryTree_item.h"
 #include <string>
 #include <memory>
 #include <stdexcept>
@@ -25,20 +26,22 @@ void TNaryTree::Update(Rectangle &&polygon, std::string &&tree_path){
         throw std::out_of_range("Current number of elements equals maximal number of elements in tree\n");
         return;
     } else {
-        std::shared_ptr<Item> tmp(root);
+        std::shared_ptr<Item> tmp = root;
         for(int i = 0; i < tree_path.length() - 1; i++){
             if(tree_path[i] == 'b'){
-                if(tmp->bro == nullptr){
+                std::shared_ptr<Item> q((*tmp).Get_bro());
+                if(q == nullptr){
                     throw std::invalid_argument("Path does not exist\n");
                     return;
                 }
-                tmp = tmp->bro;
+                tmp = q;
             } else if(tree_path[i] == 'c'){
-                if(tmp->son == nullptr){
+                std::shared_ptr<Item> q = (*tmp).Get_son();
+                if(q == nullptr){
                     throw std::invalid_argument("Path does not exist\n");
                     return;
                 }
-                tmp = tmp->son;
+                tmp = q;
             } else {
                 throw std::invalid_argument("Error in path\n");
                 return;
@@ -46,11 +49,15 @@ void TNaryTree::Update(Rectangle &&polygon, std::string &&tree_path){
         }
         std::shared_ptr<Item> item(new Item(polygon));
         if(tree_path.back() == 'b'){
-            tmp->bro = item;
-            this->curr_number++;
+            /*std::shared_ptr<Item> p = (*tmp).Get_bro();
+            p = item;*/
+            (*tmp).Set_bro(item);
+            curr_number++;
         } else if(tree_path.back() == 'c'){
-            tmp->son = item;
-            this->curr_number++;
+            /*std::shared_ptr<Item> p = (*tmp).Get_son();
+            p = item;*/
+            (*tmp).Set_son(item);
+            curr_number++;
         } else {
             throw std::invalid_argument("Error in path\n");
             return;
@@ -63,8 +70,8 @@ std::shared_ptr<Item> copy(std::shared_ptr<Item> root){
         return nullptr;
     }
     std::shared_ptr<Item> root_copy(new Item(root));
-    root_copy->bro = copy(root->bro);
-    root_copy->son = copy(root->son);
+    (*root_copy).Set_bro(copy((*root).Get_bro()));
+    (*root_copy).Set_son(copy((*root).Get_son()));
     return root_copy; 
 }
 
@@ -83,7 +90,7 @@ int clear(std::shared_ptr<Item> node) {
     if (!node) {
         return 0;
     }
-    int temp_res = clear(node->bro) + clear(node->son) + 1;
+    int temp_res = clear((*node).Get_bro()) + clear((*node).Get_son()) + 1;
     return temp_res;
 }
 
@@ -99,28 +106,30 @@ void TNaryTree::Clear(std::string &&tree_path){
     }
     for(int i = 0; i < tree_path.length(); i++){
         if(tree_path[i] == 'b'){
-            if(tmp->bro == nullptr){
+            std::shared_ptr<Item> q((*tmp).Get_bro());
+            if(q == nullptr){
                 throw std::invalid_argument("Path does not exist\n");
                 return;
             }
             prev_tmp = tmp;
-            tmp = tmp->bro;
+            tmp = q;
         } else if(tree_path[i] == 'c'){
-            if(tmp->son == nullptr){
+            std::shared_ptr<Item> q((*tmp).Get_son());
+            if(q == nullptr){
                 throw std::invalid_argument("Path does not exist\n");
                 return;
             }
             prev_tmp = tmp;
-            tmp = tmp->son;
+            tmp = q;
         } else {
             throw std::invalid_argument("Error in path\n");
             return;
         }
     }
-    if (tmp == prev_tmp->son) {
-        prev_tmp->son = nullptr;
+    if (tmp == (*prev_tmp).Get_son()) {
+        (*prev_tmp).Set_son(nullptr);
     } else {
-        prev_tmp->bro = nullptr;
+        (*prev_tmp).Set_bro(nullptr);
     }
     curr_number -= clear(tmp);
 }
@@ -129,7 +138,7 @@ double area(std::shared_ptr<Item> node){
     if(!node){
         return 0;
     }
-    return node->Area() + area(node->bro) + area(node->son);
+    return node->Area() + area((*node).Get_bro()) + area((*node).Get_son());
 }
 
 double TNaryTree::Area(std::string &&tree_path){
@@ -137,17 +146,19 @@ double TNaryTree::Area(std::string &&tree_path){
     tmp = root;
     for(int i = 0; i < tree_path.length(); i++){
         if(tree_path[i] == 'b'){
-            if(tmp->bro == nullptr){
+            std::shared_ptr<Item> q((*tmp).Get_bro());
+            if(q == nullptr){
                 throw std::invalid_argument("Path does not exist\n");
                 return -1;
             }
-            tmp = tmp->bro;
+            tmp = q;
         } else if(tree_path[i] == 'c'){
-            if(tmp->son == nullptr){
+            std::shared_ptr<Item> q((*tmp).Get_son());
+            if(q == nullptr){
                 throw std::invalid_argument("Path does not exist\n");
                 return -1;
             }
-            tmp = tmp->son;
+            tmp = q;
         } else {
             throw std::invalid_argument("Error in path\n");
             return -1;
@@ -163,24 +174,24 @@ void print(std::ostream& os, std::shared_ptr<Item> node){
     if(!node){
         return;
     }
-    if(node->son){
+    if((*node).Get_son()){
         //os <<  <<node->pentagon.GetArea() <<  : ]" << 
         os << node->Area() << ": [";
-        print(os, node->son);
-        if(node->bro){
-            if(node->bro){
+        print(os, (*node).Get_son());
+        if((*node).Get_bro()){
+            if((*node).Get_bro()){
                 os << ", ";
-                print(os, node->bro);
+                print(os, (*node).Get_bro());
             }
         }
         os << "]";
-    } else if (node->bro) {
+    } else if ((*node).Get_bro()) {
        os << node->Area() << ": [";
-        print(os, node->bro);
-        if(node->son){
-            if(node->son){
+        print(os, (*node).Get_bro());
+        if((*node).Get_son()){
+            if((*node).Get_son()){
                 os << ", ";
-                print(os, node->son);
+                print(os, (*node).Get_son());
             }
         }
         os << "]";
