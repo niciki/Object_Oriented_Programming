@@ -3,8 +3,9 @@
 
 #include "TNaryTree_item.h"
 
-template <typename T>
-class TNaryTree {
+template <class T>
+class TNaryTree
+{
     public:
         // Инициализация дерева с указанием размера
         TNaryTree(int n);
@@ -29,8 +30,11 @@ class TNaryTree {
         int size();
         // Вывод дерева в формате вложенных списков, где каждый вложенный список является:
         // "S0: [S1: [S3, S4: [S5, S6]], S2]", где Si - площадь фигуры
-        template <typename A> friend std::ostream& operator<<(std::ostream& os, const TNaryTree<A>& tree);
+        template <class A>
+        friend std::ostream& operator<<(std::ostream& os, const TNaryTree<A>& tree);
+        
         virtual ~TNaryTree();
+        
     private:
         int curr_number;
         int max_number;

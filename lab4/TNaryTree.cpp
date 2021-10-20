@@ -1,22 +1,22 @@
 #include "TNaryTree.h"
-#include "TNaryTree_item.h"
 #include <string>
 #include <memory>
 #include <stdexcept>
+#include <iostream>
 
-template <typename T>
+template <class T>
 TNaryTree<T>::TNaryTree(int n) {
     max_number = n;
     curr_number = 0;
     root = nullptr;
 };
 
-template <typename T>
-bool TNaryTree<T>::Empty(){
+template <class T>
+bool TNaryTree<T>::Empty() {
     return curr_number ? 0 : 1;
 }
 
-template <typename T>
+template <class T>
 void TNaryTree<T>::Update(T &&polygon, std::string &&tree_path){
     if(tree_path != "" && curr_number == 0){
         throw std::invalid_argument("Error, there is not a root value\n");
@@ -30,7 +30,7 @@ void TNaryTree<T>::Update(T &&polygon, std::string &&tree_path){
         return;
     } else {
         std::shared_ptr<Item<T>> tmp = root;
-        for(int i = 0; i < tree_path.length() - 1; i++){
+        for(size_t i = 0; i < tree_path.length() - 1; i++) {
             if(tree_path[i] == 'b'){
                 std::shared_ptr<Item<T>> q((*tmp).Get_bro());
                 if(q == nullptr){
@@ -68,7 +68,7 @@ void TNaryTree<T>::Update(T &&polygon, std::string &&tree_path){
     }
 }
 
-template <typename T>
+template <class T>
 std::shared_ptr<Item<T>> copy(std::shared_ptr<Item<T>> root){
     if(!root){
         return nullptr;
@@ -79,7 +79,7 @@ std::shared_ptr<Item<T>> copy(std::shared_ptr<Item<T>> root){
     return root_copy; 
 }
 
-template <typename T>
+template <class T>
 TNaryTree<T>::TNaryTree(const TNaryTree<T>& other){
     curr_number = 0;
     max_number = other.max_number;
@@ -87,12 +87,12 @@ TNaryTree<T>::TNaryTree(const TNaryTree<T>& other){
     curr_number = other.curr_number;
 ;}
 
-template <typename T>
+template <class T>
 int TNaryTree<T>::size(){
     return curr_number;
 }
 
-template <typename T>
+template <class T>
 int clear(std::shared_ptr<Item<T>> node) {
     if (!node) {
         return 0;
@@ -101,7 +101,7 @@ int clear(std::shared_ptr<Item<T>> node) {
     return temp_res;
 }
 
-template <typename T>
+template <class T>
 void TNaryTree<T>::Clear(std::string &&tree_path){
     std::shared_ptr<Item<T>> prev_tmp = nullptr;
     std::shared_ptr<Item<T>> tmp;
@@ -112,7 +112,7 @@ void TNaryTree<T>::Clear(std::string &&tree_path){
         root = nullptr;
         return;
     }
-    for(int i = 0; i < tree_path.length(); i++){
+    for(size_t i = 0; i < tree_path.length(); i++) {
         if(tree_path[i] == 'b'){
             std::shared_ptr<Item<T>> q((*tmp).Get_bro());
             if(q == nullptr){
@@ -142,7 +142,7 @@ void TNaryTree<T>::Clear(std::string &&tree_path){
     curr_number -= clear(tmp);
 }
 
-template <typename T>
+template <class T>
 double area(std::shared_ptr<Item<T>> node){
     if(!node){
         return 0;
@@ -150,11 +150,11 @@ double area(std::shared_ptr<Item<T>> node){
     return node->Area() + area((*node).Get_bro()) + area((*node).Get_son());
 }
 
-template <typename T>
+template <class T>
 double TNaryTree<T>::Area(std::string &&tree_path){
     std::shared_ptr<Item<T>> tmp;
     tmp = root;
-    for(int i = 0; i < tree_path.length(); i++){
+    for(size_t i = 0; i < tree_path.length(); i++) {
         if(tree_path[i] == 'b'){
             std::shared_ptr<Item<T>> q((*tmp).Get_bro());
             if(q == nullptr){
@@ -180,7 +180,7 @@ double TNaryTree<T>::Area(std::string &&tree_path){
 // Вывод дерева в формате вложенных списков, где каждый вложенный список является:
 // "S0: [S1: [S3, S4: [S5, S6]], S2]", где Si - площадь фигуры
 
-template <typename T>
+template <class T>
 void print(std::ostream& os, std::shared_ptr<Item<T>> node){
     if(!node){
         return;
@@ -212,18 +212,18 @@ void print(std::ostream& os, std::shared_ptr<Item<T>> node){
     }
 }
 
-template <typename T>
+template <class T>
 std::ostream& operator<<(std::ostream& os, const TNaryTree<T>& tree){
     print(os, tree.root);
     os << "\n";
     return os;
 }
 
-template <typename T>
+template <class T>
 TNaryTree<T>::~TNaryTree(){
     Clear();
 };
 
-#include "Rectangle.h"
+#include "rectangle.h"
 template class TNaryTree<Rectangle>;
 template std::ostream& operator<<(std::ostream& os, const TNaryTree<Rectangle>& stack);
