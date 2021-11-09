@@ -34,7 +34,7 @@ std::istream &operator>>(std::istream &is, Trapezoid &figure){
     return is;
 }
 
-std::ostream &operator<<(std::ostream &os, Trapezoid &figure){
+std::ostream &operator<<(std::ostream &os, const Trapezoid &figure){
     os << "Trapezoid: " << figure.a << " " << figure.b << " " << figure.c << " " << figure.d << std::endl;
     return os;
 }

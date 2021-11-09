@@ -28,7 +28,7 @@ std::istream &operator>>(std::istream &is, Rectangle &figure){
     return is;
 }
 
-std::ostream &operator<<(std::ostream &os, Rectangle &figure){
+std::ostream &operator<<(std::ostream &os, const Rectangle &figure){
     os << "Rectangle: " << figure.a << " " << figure.b << " " << figure.c << " " << figure.d << std::endl;
     return os;
 }

@@ -29,7 +29,7 @@ std::istream &operator>>(std::istream &is, Rhombus &figure){
     return is;
 }
 
-std::ostream &operator<<(std::ostream &os, Rhombus &figure){
+std::ostream &operator<<(std::ostream &os, const Rhombus &figure){
     os << "Rhombus: " << figure.a << " " << figure.b << " " << figure.c << " " << figure.d << std::endl;
     return os;
 }

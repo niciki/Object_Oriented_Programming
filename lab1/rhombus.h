@@ -12,7 +12,7 @@ class Rhombus: Figure {
         Rhombus(Point a_, Point b_, Point c_, Point d_);
         Rhombus(std::istream& is);
         friend std::istream &operator>>(std::istream &is, Rhombus &figure);
-        friend std::ostream &operator<<(std::ostream &os, Rhombus &figure);
+        friend std::ostream &operator<<(std::ostream &os, const Rhombus &figure);
     private:
         Point a;
         Point b;
