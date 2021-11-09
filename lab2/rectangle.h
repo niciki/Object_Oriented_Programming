@@ -12,7 +12,7 @@ class Rectangle: Figure {
         Rectangle(Point a_, Point b_, Point c_, Point d_);
         Rectangle(std::istream& is);
         friend std::istream &operator>>(std::istream &is, Rectangle &figure);
-        friend std::ostream &operator<<(std::ostream &os, Rectangle &figure);
+        friend std::ostream &operator<<(std::ostream &os, const Rectangle &figure);
     private:
         Point a;
         Point b;

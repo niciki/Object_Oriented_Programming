@@ -13,7 +13,7 @@ class Point {
         double X();
         double Y();
         friend std::istream& operator>>(std::istream& is, Point& p);
-        friend std::ostream& operator<<(std::ostream& os, Point& p);
+        friend std::ostream& operator<<(std::ostream& os, const Point& p);
 
     private:
         double x_;
