@@ -23,3 +23,12 @@ Rectangle::Rectangle(Point a_, Point b_, Point c_, Point d_):
 Rectangle::Rectangle(std::istream& is){
     is >> a >> b >> c >> d; 
 }
+std::istream &operator>>(std::istream &is, Rectangle &figure){
+    is >> figure.a >> figure.b >> figure.c >> figure.d;
+    return is;
+}     
+        
+std::ostream &operator<<(std::ostream &os, Rectangle &figure){
+    os << "Rectangle: " << figure.a << " " << figure.b << " " << figure.c << " " << figure.d << std::endl;
+    return os;
+}

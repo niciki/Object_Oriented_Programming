@@ -197,6 +197,7 @@ void print(std::ostream& os, Item* node){
 std::ostream& operator<<(std::ostream& os, const TNaryTree& tree){
     print(os, tree.root);
     os << "\n";
+    return os;
 }
 
 TNaryTree::~TNaryTree(){
