@@ -23,3 +23,13 @@ size_t Rhombus::VertexesNumber(){
 double Rhombus::Area(){
     return a.dist(c) * b.dist(d) * 0.5;
 }
+
+std::istream &operator>>(std::istream &is, Rhombus &figure){
+    is >> figure.a >> figure.b >> figure.c >> figure.d;
+    return is;
+}
+
+std::ostream &operator<<(std::ostream &os, Rhombus &figure){
+    os << "Rhombus: " << figure.a << " " << figure.b << " " << figure.c << " " << figure.d << std::endl;
+    return os;
+}

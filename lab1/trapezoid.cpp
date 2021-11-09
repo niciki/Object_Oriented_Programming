@@ -28,3 +28,13 @@ double Trapezoid::Area(){
     double COS = (ax*bx + ay*by)/(sqrt(ax*ax+ay*ay)*sqrt(bx*bx+by*by));
     return double(a.dist(c) * b.dist(d) * 0.5 *sin(acos(COS)));
 }
+
+std::istream &operator>>(std::istream &is, Trapezoid &figure){
+    is >> figure.a >> figure.b >> figure.c >> figure.d;
+    return is;
+}
+
+std::ostream &operator<<(std::ostream &os, Trapezoid &figure){
+    os << "Trapezoid: " << figure.a << " " << figure.b << " " << figure.c << " " << figure.d << std::endl;
+    return os;
+}
