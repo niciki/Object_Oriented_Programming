@@ -189,28 +189,27 @@ void print(std::ostream& os, std::shared_ptr<Item<T>> node){
         //os <<  <<node->pentagon.GetArea() <<  : ]" << 
         os << node->Area() << ": [";
         print(os, (*node).Get_son());
+        os << "]";
         if((*node).Get_bro()){
             if((*node).Get_bro()){
                 os << ", ";
                 print(os, (*node).Get_bro());
             }
         }
-        os << "]";
     } else if ((*node).Get_bro()) {
-       os << node->Area() << ": [";
+        os << node->Area() << ", ";
         print(os, (*node).Get_bro());
         if((*node).Get_son()){
-            if((*node).Get_son()){
-                os << ", ";
-                print(os, (*node).Get_son());
-            }
+            os << ": [";
+            print(os, (*node).Get_son());
+            os << "]";
         }
-        os << "]";
     }
     else {
         os << node->Area();
     }
 }
+
 
 template <class T>
 std::ostream& operator<<(std::ostream& os, const TNaryTree<T>& tree){
