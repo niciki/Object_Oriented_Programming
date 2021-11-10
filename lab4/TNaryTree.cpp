@@ -191,10 +191,8 @@ void print(std::ostream& os, std::shared_ptr<Item<T>> node){
         print(os, (*node).Get_son());
         os << "]";
         if((*node).Get_bro()){
-            if((*node).Get_bro()){
-                os << ", ";
-                print(os, (*node).Get_bro());
-            }
+            os << ", ";
+            print(os, (*node).Get_bro());
         }
     } else if ((*node).Get_bro()) {
         os << node->Area() << ", ";
