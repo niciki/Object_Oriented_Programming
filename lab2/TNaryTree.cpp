@@ -167,32 +167,31 @@ void print(std::ostream& os, Item* node){
     if(!node){
         return;
     }
-    if(node->Get_son()){
+    if((*node).Get_son()){
         //os <<  <<node->pentagon.GetArea() <<  : ]" << 
         os << node->Area() << ": [";
-        print(os, node->Get_son());
-        if(node->Get_bro()){
-            if(node->Get_bro()){
+        print(os, (*node).Get_son());
+        os << "]";
+        if((*node).Get_bro()){
+            if((*node).Get_bro()){
                 os << ", ";
-                print(os, node->Get_bro());
+                print(os, (*node).Get_bro());
             }
         }
-        os << "]";
-    } else if (node->Get_bro()) {
-       os << node->Area() << ": [";
-        print(os, node->Get_bro());
-        if(node->Get_son()){
-            if(node->Get_son()){
-                os << ", ";
-                print(os, node->Get_son());
-            }
+    } else if ((*node).Get_bro()) {
+        os << node->Area() << ", ";
+        print(os, (*node).Get_bro());
+        if((*node).Get_son()){
+            os << ": [";
+            print(os, (*node).Get_son());
+            os << "]";
         }
-        os << "]";
     }
     else {
         os << node->Area();
     }
 }
+
 
 std::ostream& operator<<(std::ostream& os, const TNaryTree& tree){
     print(os, tree.root);
