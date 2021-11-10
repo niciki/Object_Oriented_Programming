@@ -170,7 +170,7 @@ double TNaryTree::Area(std::string &&tree_path){
 // Вывод дерева в формате вложенных списков, где каждый вложенный список является:
 // "S0: [S1: [S3, S4: [S5, S6]], S2]", где Si - площадь фигуры
 
-void print(std::ostream& os, std::shared_ptr<Item<T>> node){
+void print(std::ostream& os, std::shared_ptr<Item> node){
     if(!node){
         return;
     }
