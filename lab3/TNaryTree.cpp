@@ -170,7 +170,7 @@ double TNaryTree::Area(std::string &&tree_path){
 // Вывод дерева в формате вложенных списков, где каждый вложенный список является:
 // "S0: [S1: [S3, S4: [S5, S6]], S2]", где Si - площадь фигуры
 
-void print(std::ostream& os, std::shared_ptr<Item> node){
+void print(std::ostream& os, std::shared_ptr<Item<T>> node){
     if(!node){
         return;
     }
@@ -178,28 +178,27 @@ void print(std::ostream& os, std::shared_ptr<Item> node){
         //os <<  <<node->pentagon.GetArea() <<  : ]" << 
         os << node->Area() << ": [";
         print(os, (*node).Get_son());
+        os << "]";
         if((*node).Get_bro()){
             if((*node).Get_bro()){
                 os << ", ";
                 print(os, (*node).Get_bro());
             }
         }
-        os << "]";
     } else if ((*node).Get_bro()) {
-       os << node->Area() << ": [";
+        os << node->Area() << ", ";
         print(os, (*node).Get_bro());
         if((*node).Get_son()){
-            if((*node).Get_son()){
-                os << ", ";
-                print(os, (*node).Get_son());
-            }
+            os << ": [";
+            print(os, (*node).Get_son());
+            os << "]";
         }
-        os << "]";
     }
     else {
         os << node->Area();
     }
 }
+
 
 std::ostream& operator<<(std::ostream& os, const TNaryTree& tree){
     print(os, tree.root);
