@@ -37,8 +37,7 @@ class TNaryTree {
         Iterator<Item<T>, T> begin();
         Iterator<Item<T>, T> end();
         virtual ~TNaryTree();
-        
-    public:
+    private:
         int curr_number;
         int max_number;
         std::shared_ptr<Item<T>> root;
