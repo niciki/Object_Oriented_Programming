@@ -74,7 +74,7 @@ TNaryTree::TNaryTree(const TNaryTree& other){
     max_number = other.max_number;
     root = copy(other.root);
     curr_number = other.curr_number;
-;}
+}
 
 int TNaryTree::size(){
     return curr_number;
