@@ -6,7 +6,8 @@
     "Rhombus"
   ],
   "containers": [
-    "TNaryTree"
+    "TNaryTree",
+    "TVector"
   ],
   "finished_labs": {
     "lab0.1": "lab0.1",
